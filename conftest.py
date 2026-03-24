@@ -2,23 +2,21 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.chrome.options import Options as ChromeOptions
-from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 import requests
 from urls import Urls
-import allure
 from helpers import create_random_email, create_random_password, create_random_name
 
 
 @pytest.fixture(params=[webdriver.Firefox, webdriver.Chrome], ids=['firefox', 'chrome'], scope="function")
 def driver(request):
     driver_class = request.param
-    
+
     if driver_class == webdriver.Chrome:
         options = ChromeOptions()
         options.add_argument('--window-size=1920,1080')
         options.add_argument('--incognito')
         driver = webdriver.Chrome(options=options)
-        
+
     elif driver_class == webdriver.Firefox:
         firefox_options = FirefoxOptions()
         firefox_options.add_argument('--width=1920')
@@ -28,7 +26,7 @@ def driver(request):
         firefox_options.set_preference("browser.tabs.remote.autostart", False)
         firefox_options.set_preference("browser.tabs.remote.autostaskbar", False)
         driver = webdriver.Firefox(options=firefox_options)
-    
+
     driver.get(Urls.BASE_URL)
     yield driver
     driver.quit()

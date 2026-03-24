@@ -4,7 +4,7 @@ import allure
 
 
 class OrderHistoryPage(BasePage):
-    
+
     @allure.step('Подождать прогрузки карточки заказа')
     def wait_for_order_card(self):
         self.wait_visibility_of_element(OrderHistoryPageLocators.ORDER_CARD)

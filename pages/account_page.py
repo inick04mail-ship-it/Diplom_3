@@ -4,7 +4,7 @@ import allure
 
 
 class AccountPage(BasePage):
-    
+
     @allure.step('Клик по кнопке "История заказов"')
     def click_order_history_button(self):
         self.click_on_element(AccountPageLocators.ORDER_HISTORY)
