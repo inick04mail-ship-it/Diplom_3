@@ -5,10 +5,14 @@ import allure
 
 class FeedPage(BasePage):
 
+    @allure.step('Подождать отображения заголовка ленты заказов')
+    def wait_for_feed_title(self, timeout=15):
+        self.wait_visibility_of_element(OrderFeedLocators.FEED_TITLE, timeout=timeout)
+        return self
+
     @allure.step('Получить заголовок ленты заказов')
     def get_feed_title(self):
-        # Увеличенный таймаут для стабильности в Chrome
-        return self.get_text_on_element(OrderFeedLocators.FEED_TITLE, timeout=15)
+        return self.get_text_on_element(OrderFeedLocators.FEED_TITLE, timeout=5)
 
     @allure.step('Клик по карточке заказа')
     def click_on_order_card(self):

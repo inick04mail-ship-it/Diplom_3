@@ -102,3 +102,13 @@ class BasePage:
         WebDriverWait(self.driver, timeout).until_not(
             expected_conditions.text_to_be_present_in_element(locator, value)
         )
+
+    @allure.step('Открыть страницу по URL')
+    def open_url(self, url):
+        self.driver.get(url)
+
+    @allure.step('Получить значение из localStorage')
+    def get_local_storage_item(self, key):
+        return self.driver.execute_script(
+            f'return window.localStorage.getItem("{key}");'
+        )

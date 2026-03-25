@@ -16,7 +16,9 @@ class TestMainFunctionality:
     def test_order_feed_button_click(self, driver):
         main_page = MainPage(driver)
         feed_page = FeedPage(driver)
+
         main_page.click_order_feed_button()
+        feed_page.wait_for_feed_title(timeout=20)
         assert feed_page.get_feed_title() == 'Лента заказов'
 
     @allure.title('Проверка отображения окна "Детали ингредиента" при клике на ингредиент')

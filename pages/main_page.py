@@ -1,3 +1,4 @@
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from pages.base_page import BasePage
 from locators import MainPageLocators
 import allure
@@ -44,7 +45,7 @@ class MainPage(BasePage):
         try:
             self.wait_element_invisible(MainPageLocators.INGREDIENT_MODAL_TITLE, timeout=5)
             return True
-        except Exception:
+        except (TimeoutException, NoSuchElementException):
             return False
 
     @allure.step('Закрыть модальное окно ингредиента')
@@ -54,7 +55,7 @@ class MainPage(BasePage):
             if close_buttons:
                 self.click_webelement(close_buttons[0])
                 self.wait_element_invisible(MainPageLocators.INGREDIENT_MODAL_TITLE, timeout=5)
-        except Exception:
+        except (TimeoutException, NoSuchElementException):
             pass
         return self
 
@@ -70,7 +71,7 @@ class MainPage(BasePage):
         try:
             counter_element = self.find_element_with_wait(MainPageLocators.INGREDIENT_COUNTER)
             return int(counter_element.text)
-        except Exception:
+        except (TimeoutException, NoSuchElementException, ValueError):
             return 0
 
     @allure.step('Клик по кнопке "Оформить заказ"')
@@ -86,8 +87,8 @@ class MainPage(BasePage):
     def get_order_number(self):
         try:
             return self.get_text_on_element(MainPageLocators.ORDER_NUMBER_MODAL)
-        except Exception:
-            return "0"
+        except (TimeoutException, NoSuchElementException, ValueError):
+            return None
 
     @allure.step('Закрыть окно подтверждения заказа')
     def close_order_confirmation(self):
@@ -95,6 +96,6 @@ class MainPage(BasePage):
             close_button = self.find_element_with_wait(MainPageLocators.CONFIRMATION_CLOSE_BUTTON)
             self.click_webelement(close_button)
             self.wait_element_invisible(MainPageLocators.ORDER_CONFIRMATION_MODAL, timeout=5)
-        except Exception:
+        except (TimeoutException, NoSuchElementException):
             pass
         return self

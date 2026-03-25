@@ -14,17 +14,18 @@ class TestOrderFeed:
         feed_page = FeedPage(driver)
 
         
+        main_page.open_url(Urls.BASE_URL)
         main_page.click_order_feed_button()
         initial_count = feed_page.get_total_orders_count()
 
         
-        access_token = driver.execute_script('return window.localStorage.getItem("accessToken");')
+        access_token = main_page.get_local_storage_item("accessToken")
         headers = {"Authorization": access_token}
         payload = {"ingredients": Urls.VALID_INGREDIENTS}
         requests.post(Urls.CREATE_ORDER, headers=headers, json=payload)
 
         
-        driver.get(Urls.BASE_URL)
+        main_page.open_url(Urls.BASE_URL)
         main_page = MainPage(driver)
         feed_page = FeedPage(driver)
         main_page.click_order_feed_button()
@@ -37,15 +38,16 @@ class TestOrderFeed:
         main_page = MainPage(driver)
         feed_page = FeedPage(driver)
 
+        main_page.open_url(Urls.BASE_URL)
         main_page.click_order_feed_button()
         initial_count = feed_page.get_today_orders_count()
 
-        access_token = driver.execute_script('return window.localStorage.getItem("accessToken");')
+        access_token = main_page.get_local_storage_item("accessToken")
         headers = {"Authorization": access_token}
         payload = {"ingredients": Urls.VALID_INGREDIENTS}
         requests.post(Urls.CREATE_ORDER, headers=headers, json=payload)
 
-        driver.get(Urls.BASE_URL)
+        main_page.open_url(Urls.BASE_URL)
         main_page = MainPage(driver)
         feed_page = FeedPage(driver)
         main_page.click_order_feed_button()
@@ -58,6 +60,7 @@ class TestOrderFeed:
         main_page = MainPage(driver)
         feed_page = FeedPage(driver)
 
+        main_page.open_url(Urls.BASE_URL)
         main_page.click_order_feed_button()
         orders_in_progress = feed_page.get_orders_in_progress()
         assert isinstance(orders_in_progress, list)
